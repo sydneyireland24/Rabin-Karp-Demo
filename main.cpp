@@ -9,7 +9,6 @@ using namespace std;
  * @param text - the text that you are parsing to find a particular pattern
  * @param prime - a large prime number to help prevent integer overflow in hashing
  */
-
 void search(char pattern[], char text[], int prime)
 {
     int ASCII = 256; //total possible number of characters that could be in a char []
@@ -18,35 +17,26 @@ void search(char pattern[], char text[], int prime)
     int hashPattern = 0; //hash value for pattern
     int hashText = 0; //hash value for txt
     int hash = 1; //not sure what this does yet
-    bool patternFound = false;
+    bool patternFound = false; //bool flag on whether or not a pattern has been found
 
+    //stops the algorithm is the pattern is longer than the text
     if(patternLength > textLength)
     {
         cout << "No pattern found - pattern length is longer than text length." << endl;
         return;
     }
 
-    // The value of h would be "pow(d, M-1)%q"
     for (int i = 0; i < patternLength - 1; i++)
-    {
         hash = (hash * ASCII) % prime;
-        cout << "HASH AT INDEX " << i << ": " << hash << endl;
-    }
 
-    cout << endl;
-    // Calculate the hash value of pattern and first
-    // window of text
+    //calculates the hash value of the pattern and first text window
     for (int i = 0; i < patternLength; i++)
     {
         hashPattern = (ASCII * hashPattern + pattern[i]) % prime;
         hashText = (ASCII * hashText + text[i]) % prime;
-        cout << "HASH PATTERN AT INDEX " << i << ": " << hashPattern << endl;
-        cout << "HASH TEXT AT INDEX " << i << ": " << hashText << endl;
     }
 
-    cout << endl;
-
-    // Slide the pattern over text one by one
+    //slide the pattern over each text window
     for (int i = 0; i <= textLength - patternLength; i++)
     {
         //Check the hash values of current window of text
@@ -56,27 +46,32 @@ void search(char pattern[], char text[], int prime)
         {
             for (int j = 0; j < patternLength; j++)
             {
+                //if the characters aren't equal,
+                //there's been a rare instance where
+                //the window has the same
+                //hash value as the pattern,
+                //but not the same characters
                 if (text[i + j] != pattern[j])
-                {
                     break;
-                }
 
+                //if we've gone through the whole pattern without
+                //unequal characters, a match is confirmed!
                 if (j == patternLength - 1)
                 {
-                    cout << "Pattern found at index " << i <<endl;
+                    cout << "Pattern found at index " << i << endl;
                     patternFound = true;
                 }
             }
         }
 
-        // Calculate hash value for next window of text: Remove
-        // leading digit, add trailing digit
+        //Calculate hash value for next window of text:
+        //Remove leading digit, add trailing digit
         if ( i < textLength - patternLength )
         {
             hashText = (ASCII * (hashText - text[i] * hash) + text[i + patternLength]) % prime;
 
-            // We might get negative value of t, converting it
-            // to positive
+            //if we have a case where the hash text is negative,
+            //we'll make it positive
             if (hashText < 0)
                 hashText = (hashText + prime);
         }
@@ -86,15 +81,42 @@ void search(char pattern[], char text[], int prime)
         cout << "Pattern was not found in the text" << endl;
 }
 
-/* Driver code */
 int main()
 {
-    char text[] = "GEEKS FOR GEEKS";
-    char pattern[] = "GEEKS";
-
     //A large prime number to help prevent integer overflow in hashing
     int primeNum = 503;
 
-    search(pattern, text, primeNum);
+    /**
+     * EXAMPLE 1
+     */
+    char text1[] = "CS2341 AND CS 3353";
+    char pattern1[] = "CS";
+    search(pattern1, text1, primeNum);
+    cout << endl;
+
+    /**
+     * EXAMPLE 2
+     */
+    char text2[] = "Hello World";
+    char pattern2[] = "Hello World!";
+    search(pattern2, text2, primeNum);
+    cout << endl;
+
+    /**
+     * EXAMPLE 3
+     */
+    char text3[] = "Han shot first";
+    char pattern3[] = "shot";
+    search(pattern3, text3, primeNum);
+    cout << endl;
+
+    /**
+     * EXAMPLE 4
+     */
+    char text4[] = "Buster and Winston are the best DOGS";
+    char pattern4[] = "dog";
+    search(pattern4, text4, primeNum);
+    cout << endl;
+
     return 0;
 }
