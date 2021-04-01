@@ -61,6 +61,10 @@ class RabinKarp{
         }
 
         void runSmallTests(){
+            /**
+             * EXAMPLE 1
+             * A pattern should be found at index 0 and index 11
+             */
             char pattern1[] = "CS";
             char text1[] = "CS2341 AND CS3353";
             cout << "======================================================" << endl;
@@ -68,18 +72,30 @@ class RabinKarp{
             search(pattern1, text1);
             cout << "======================================================" << endl;
 
+            /**
+             * EXAMPLE 2
+             * No pattern should be found since the pattern is longer than the text
+             */
             char pattern2[] = "Hello World!!";
             char text2[] = "Hello World";
             cout << "Running test with pattern " << pattern2 << " and text " << text2 << endl;
             search(pattern2, text2);
             cout << "======================================================" << endl;
 
+            /**
+             * EXAMPLE 3
+             * No pattern should be found, since the algorithm is case-sensitive
+             */
             char pattern3[] = "DOGS";
             char text3[] = "Buster and Winston are the best dogs";
             cout << "Running test with pattern " << pattern3 << " and text " << text3 << endl;
             search(pattern3, text3);
             cout << "======================================================" << endl;
 
+            /**
+             * EXAMPLE 4
+             * Only one instance of the pattern should be found at index 5
+             */
             char pattern4[] = "shot";
             char text4[] = "Han shot first";
             cout << "Running test with pattern " << pattern4 << " and text " << text4 << endl;
