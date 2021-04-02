@@ -4,18 +4,14 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
-#include <chrono>
 
 using namespace std;
-using namespace std::chrono;
 
 class RabinKarp{
     private:
         int ASCII = 256; //total possible number of characters that could be in a char []
         int primeNum = 503; //A large prime number to help prevent integer overflow in hashing
-        string pattern; //the pattern you want to search for in a particular text
         string fileName; //the file that you will get text from
-        int numTests; //the number of times the algorithm will run and time
         ifstream inFS; //file input stream
 
     public:
@@ -34,7 +30,7 @@ class RabinKarp{
             cout << "File search with pattern " << pattern << endl;
             const char * searchPattern = pattern.c_str();
             const char * searchText = getText();
-            search(searchPattern, searchText);
+            patternSearch(searchPattern, searchText);
         }
 
         /**
@@ -60,6 +56,11 @@ class RabinKarp{
             return fullString.c_str();
         }
 
+        /**
+         * @purpose: runs a few example patterns and texts to show algorithm functionality
+         * @param none
+         * @return none
+         */
         void runSmallTests(){
             /**
              * EXAMPLE 1
@@ -69,7 +70,7 @@ class RabinKarp{
             char text1[] = "CS2341 AND CS3353";
             cout << "======================================================" << endl;
             cout << "Running test with pattern " << pattern1 << " and text " << text1 << endl;
-            search(pattern1, text1);
+            patternSearch(pattern1, text1);
             cout << "======================================================" << endl;
 
             /**
@@ -79,7 +80,7 @@ class RabinKarp{
             char pattern2[] = "Hello World!!";
             char text2[] = "Hello World";
             cout << "Running test with pattern " << pattern2 << " and text " << text2 << endl;
-            search(pattern2, text2);
+            patternSearch(pattern2, text2);
             cout << "======================================================" << endl;
 
             /**
@@ -89,7 +90,7 @@ class RabinKarp{
             char pattern3[] = "DOGS";
             char text3[] = "Buster and Winston are the best dogs";
             cout << "Running test with pattern " << pattern3 << " and text " << text3 << endl;
-            search(pattern3, text3);
+            patternSearch(pattern3, text3);
             cout << "======================================================" << endl;
 
             /**
@@ -99,7 +100,7 @@ class RabinKarp{
             char pattern4[] = "shot";
             char text4[] = "Han shot first";
             cout << "Running test with pattern " << pattern4 << " and text " << text4 << endl;
-            search(pattern4, text4);
+            patternSearch(pattern4, text4);
             cout << "======================================================" << endl;
         }
 
@@ -110,7 +111,7 @@ class RabinKarp{
          * @return none
          * @source Geeksforgeeks
          */
-        void search(const char pattern[], const char text[])
+        void patternSearch(const char pattern[], const char text[])
         {
             int patternLength = strlen(pattern); //the length of the pattern
             int textLength = strlen(text); //the length of the text that may or may not contain the pattern
