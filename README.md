@@ -12,4 +12,4 @@ As an example, if you were to want to search for the pattern "Dursley" in the te
 
 ## More Information on Rabin-Karp Algorithm
 Interested in a technical explanation of the Rabin-Karp Demo? Check out this article below!
-***INSERT MEDIUM LINK HERE***
+https://medium.com/@sigibbs/the-rabin-karp-algorithm-for-pattern-searching-c7900161322f
